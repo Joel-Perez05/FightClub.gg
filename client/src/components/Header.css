@@ -1,0 +1,10 @@
+.nav-link {
+    color: #eee;
+    text-decoration: none;
+    margin-right: 0.5rem;
+}
+
+.active {
+    color: black;
+    font-weight: bold;
+}
