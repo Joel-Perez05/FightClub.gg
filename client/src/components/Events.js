@@ -10,6 +10,7 @@ const Events = (props) => {
     const [events, setEvents] = useState([]);
     const navigate = useNavigate();
     const {id} = useParams;
+    const {user} = props;
 
     useEffect(() => {
         axios.get("http://localhost:8000/api/events")
@@ -20,13 +21,28 @@ const Events = (props) => {
             .catch();
     }, []);
 
+    const handleDelete = (eventId) => {
+        axios.delete("http://localhost:8000/api/events/" + eventId)
+            .then((res) => {
+                console.log(res.data);
+                const remainingEvents = events.filter((event) => {
+                    return event._id !== eventId
+                });
+                setEvents(remainingEvents);
+            })
+            .catch((err) => console.log(err))
+    }
+
     return (
         <div className='d-flex flex-wrap justify-content-center p-4 mt-5'>
             {
                 events.map((eventObj) => {
                     return(
                         <div key={eventObj._id}>
-                            <Card className="my-2 ms-5 border-dark" style={{width: '22rem'}}>
+                            <Card className="my-2 ms-5 border-dark" style={{
+                                width: '22rem',
+                                boxShadow: "7px 7px 7px gray"
+                                }}>
                                 <CardHeader className='fs-3 bg-info'>{eventObj.name}</CardHeader>
                                 <CardBody>
                                     <CardTitle tag="h3">{eventObj.game}</CardTitle>
@@ -43,6 +59,7 @@ const Events = (props) => {
                                     <Button className='ms-4' color='dark'>
                                         <Link className='text-light' to={`/events/${eventObj._id}`}>Details</Link>
                                     </Button>
+                                    <Button onClick={(e) => {handleDelete(eventObj._id)}} className='ms-4' color='dark'>Delete</Button>
                                 </CardFooter>
                             </Card>
                         </div>

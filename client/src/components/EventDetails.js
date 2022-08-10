@@ -22,11 +22,12 @@ const EventDetails = (props) => {
 
     return (
         <div>
-            <Card body color='dark' outline className="my-2 mx-auto mt-5" style={{width: '35rem', height: "40rem"}}>
+            <Card body color='dark' outline className="my-2 mx-auto mt-5" style={{width: '35rem', height: "40rem", boxShadow: "7px 7px 7px grey"}}>
                 <CardHeader className='mb-5' tag="h1">{singleEvent.name}</CardHeader>
-                <CardText className='mb-5' tag="h3">{moment(singleEvent.startDate).format("MMM-Do-YYYY")} - {moment(singleEvent.endDate).format("MMM-Do-YYYY")}</CardText>
-                <CardText className='mb-5' tag="h4">{singleEvent.description}</CardText>
-                <Button style={{width: "10rem"}} color="primary">Go somewhere</Button>
+                <CardText className='mb-5' tag="h3">Game: {singleEvent.game}</CardText>
+                <CardText className='mb-5' tag="h3">Date: {moment(singleEvent.startDate).format("MMM-Do-YYYY")} - {moment(singleEvent.endDate).format("MMM-Do-YYYY")}</CardText>
+                <CardText className='mb-5' tag="h4">Details: {singleEvent.description}</CardText>
+                <Button style={{width: "10rem", color: "white"}} color="info">Go somewhere</Button>
             </Card>
         </div>
     );

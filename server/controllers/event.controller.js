@@ -28,16 +28,22 @@ const getAllEvents = (req, res) => {
 };
 
 const createEvent = (req, res) => {
-    const user  = jwt.verify(req.cookies.userToken, SECRET);
-    Event.create({...req.body, createdBy: user._id})
-        .then((newEvent) => res.status(201).json(newEvent))
-        .catch((err) => {
-            console.log("Error in create event", err);
-            res.status(400).json({
-                message: "something went wrong in create event",
-                error: err
+    if (req.cookies.userToken) {
+        const user  = jwt.verify(req.cookies.userToken, SECRET);
+        Event.create({...req.body, createdBy: user._id})
+            .then((newEvent) => res.status(201).json(newEvent))
+            .catch((err) => {
+                console.log("Error in create event", err);
+                res.status(400).json({
+                    message: "something went wrong in create event",
+                    error: err
+                });
             });
+    } else {
+        res.status(400).json({
+            message: "Must be logged in to create an event."
         });
+    };
 };
 
 const updateEvent = (req, res) => {

@@ -13,6 +13,7 @@ const Register = (props) => {
         password: "",
         confirmPassword: ""
     });
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         setUser({
@@ -29,7 +30,8 @@ const Register = (props) => {
                 navigate("/");
             })
             .catch((err) => {
-                console.log(err.response.data.errors)
+                console.log(err.response.data.errors);
+                setErrors(err.response.data.errors);
             });
     }
 
@@ -39,21 +41,25 @@ const Register = (props) => {
             <h2 className='mb-4'>Register your FightClub account!</h2>
                 <FormGroup floating>
                     <Input id="username" name="username" placeholder='Username' value={user.username} type="text" onChange={handleChange} required />
+                    {errors.username && <p className='mt-2 ms-2' style={{color: "red"}}>{errors.username.message}</p>}
                     <Label for="username">Username</Label>
                 </FormGroup>
                 {' '}
                 <FormGroup floating>
                     <Input id="email" name="email" placeholder='Email' value={user.email} type="email" onChange={handleChange} required />
+                    {errors.email && <p className='mt-2 ms-2' style={{color: "red"}}>{errors.email.message}</p>}
                     <Label for="email">Email</Label>
                 </FormGroup>
                 {' '}
                 <FormGroup floating>
                     <Input id="password" name="password" placeholder="Password" value={user.password} type="password" onChange={handleChange} required />
+                    {errors.password && <p className='mt-2 ms-2' style={{color: "red"}}>{errors.password.message}</p>}
                     <Label for="password">Password</Label>
                 </FormGroup>
                 {' '}
                 <FormGroup floating>
                     <Input id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" value={user.confirmPassword} type="password" onChange={handleChange} required />
+                    {errors.confirmPassword && <p className='mt-2 ms-2' style={{color: "red"}}>{errors.confirmPassword.message}</p>}
                     <Label for="confirmPassword">Confirm Password</Label>
                 </FormGroup>
                 {' '}

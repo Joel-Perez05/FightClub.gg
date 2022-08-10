@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 import "./App.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
@@ -13,13 +14,26 @@ import EventDetails from "./components/EventDetails";
 function App() {
 
   const [isLoggedin, setIsLoggedin] = useState(false);
+  const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        axios.get("http://localhost:8000/api/current-user", {withCredentials: true})
+            .then((res) => {
+                setUser(res.data);
+                // console.log(user)
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }, [isLoggedin]);
+
 
   return (
     <BrowserRouter>
-      <div className="App">
-        <Header isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
+      <div>
+        <Header user={user} setUser={setUser} isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
         <Routes>
-          <Route element={<Events />} path="/" />
+          <Route element={<Events user={user} isLoggedin={isLoggedin} />} path="/" />
           <Route element={<EventNew />} path="/events/new" />
           <Route element={<EventEdit />} path="/events/edit/:id" />
           <Route element={<EventDetails />} path="/events/:id" />

@@ -28,8 +28,8 @@ const EventNew = (props) => {
                 navigate("/");
             })
             .catch((err) => {
-                console.log(err.response.data.error.errors);
-                setErrors(err.response.data.error.errors);
+                console.log(err.response.data);
+                setErrors(err.response.data);
             });
     }
 
@@ -37,28 +37,29 @@ const EventNew = (props) => {
         <div className=' row g-5 mx-auto mt-5'>
             <Form className='col-4 p-4 mx-auto' onSubmit={submitHandler}>
                 <h2 className='mb-4'>Create a New Event</h2>
+                {errors && <p style={{color: "red"}} className='mb-4'>{errors.message}</p>}
                 <FormGroup floating>
-                    <Input id="name" name='name' placeholder='Event Name' value={name} type="text" onChange={(e) => setName(e.target.value)} />
+                    <Input id="name" name='name' placeholder='Event Name' value={name} type="text" onChange={(e) => setName(e.target.value)} required/>
                     <Label for="name">Event Name</Label>
                 </FormGroup>
                 {' '}
                 <FormGroup floating>
-                    <Input id="game" name='game' placeholder="Game Name" value={game} type="text" onChange={(e) => setGame(e.target.value)} />
+                    <Input id="game" name='game' placeholder="Game Name" value={game} type="text" onChange={(e) => setGame(e.target.value)} required/>
                     <Label for="game">Game Name</Label>
                 </FormGroup>
                 {' '}
                 <FormGroup floating>
-                    <Input id="startDate" name='startDate' type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                    <Input id="startDate" name='startDate' type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required/>
                     <Label for="startDate">Start Date</Label>
                 </FormGroup>
                 {' '}
                 <FormGroup floating>
-                    <Input id="endDate" name='endDate' type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                    <Input id="endDate" name='endDate' type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required/>
                     <Label for="endDate">End Date</Label>
                 </FormGroup>
                 {' '}
                 <FormGroup floating>
-                    <Input id="description" name='description' placeholder='Event Description' value={description} type="textarea" onChange={(e) => setDescription(e.target.value)} />
+                    <Input id="description" name='description' placeholder='Event Description' value={description} type="textarea" onChange={(e) => setDescription(e.target.value)} required/>
                     <Label for="description">Event Description</Label>
                 </FormGroup>
                 {' '}

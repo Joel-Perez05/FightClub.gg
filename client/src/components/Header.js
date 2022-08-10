@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import "./Header.css"
 import axios from "axios";
@@ -8,17 +8,17 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } fr
 const Header = (props) => {
     const {isLoggedin, setIsLoggedin} = props;
     const [collapsed, setCollapsed] = useState(true);
-    const [user, setUser] = useState(null);
+    const {user, setUser} = props;
 
-    useEffect(() => {
-        axios.get("http://localhost:8000/api/current-user", {withCredentials: true})
-            .then((res) => {
-                setUser(res.data);
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    }, [isLoggedin]);
+    // useEffect(() => {
+    //     axios.get("http://localhost:8000/api/current-user", {withCredentials: true})
+    //         .then((res) => {
+    //             setUser(res.data);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         });
+    // }, [isLoggedin]);
 
     const handleLogout = () => {
         axios.post("http://localhost:8000/logout",{}, {withCredentials: true})

@@ -11,6 +11,7 @@ const Login = (props) => {
         email: "",
         password: "",
     });
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         setUser({
@@ -26,7 +27,10 @@ const Login = (props) => {
                 setIsLoggedin(true);
                 navigate("/");
             })
-            .catch((err) => console.log(err)); 
+            .catch((err) => {
+                console.log(err.response.data)
+                setErrors(err.response.data);
+            }); 
     }
 
     return (
@@ -40,6 +44,7 @@ const Login = (props) => {
                 {' '}
                 <FormGroup floating>
                     <Input id="password" name="password" placeholder="Password" value={user.password} type="password" onChange={handleChange} required />
+                    {errors.error && <p className='mt-4' style={{color: "red"}}>{errors.error}</p>}
                     <Label for="password">Password</Label>
                 </FormGroup>
                 {' '}
