@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import {Link, useParams, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from "moment";
 import { Button, Card, CardHeader, CardBody, CardTitle, CardText, CardFooter } from 'reactstrap';
@@ -9,14 +9,13 @@ import { Button, Card, CardHeader, CardBody, CardTitle, CardText, CardFooter } f
 const Events = (props) => {
     const [events, setEvents] = useState([]);
     const navigate = useNavigate();
-    const {id} = useParams;
     const {user} = props;
 
     useEffect(() => {
         axios.get("http://localhost:8000/api/events")
             .then((res) => {
-                console.log(res.data)
-                setEvents(res.data)
+                console.log(res.data);
+                setEvents(res.data);
             })
             .catch();
     }, []);

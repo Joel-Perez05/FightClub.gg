@@ -1,4 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
+import { ThemeContext } from "./ThemeContext";
+import ThemeButton from "../src/components/ThemeButton";
 import axios from "axios";
 import "./App.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,7 +14,8 @@ import EventEdit from "./components/EventEdit";
 import EventDetails from "./components/EventDetails";
 
 function App() {
-
+  const theme = useContext(ThemeContext);
+  const darkMode = theme.state.darkMode;
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -30,8 +33,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div>
+      <div style={{height: "1292px"}} className={`bg ${darkMode ? "bg-dark" : "bg-light"}`}>
         <Header user={user} setUser={setUser} isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
+        <ThemeButton />
         <Routes>
           <Route element={<Events user={user} isLoggedin={isLoggedin} />} path="/" />
           <Route element={<EventNew />} path="/events/new" />
