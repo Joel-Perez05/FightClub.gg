@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import { ThemeContext } from '../ThemeContext';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
-import { Card, CardText, Button, CardHeader } from 'reactstrap';
+import { Card, CardText, Button, CardHeader, Collapse } from 'reactstrap';
 import moment from 'moment';
 
 const EventDetails = (props) => {
@@ -42,6 +42,7 @@ const EventDetails = (props) => {
                 <CardText style={{marginBottom: "20px"}} className={`text ${darkMode ? "text-dark" : "text-light"}`} tag="h5">Organizer: {eventCreator.username}</CardText>
                 <CardText className={`text ${darkMode ? "text-dark" : "text-light"}`} tag="h5">Contact Info: {eventCreator.email}</CardText>
                 {/* <Button style={{width: "10rem", color: "white"}} color="info">Go somewhere</Button> */}
+                <Collapse horizontal>hello</Collapse>
             </Card>
         </div>
     );

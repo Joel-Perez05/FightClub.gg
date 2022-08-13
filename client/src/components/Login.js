@@ -1,16 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import { ThemeContext } from '../ThemeContext';
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import {Form, FormGroup, Input, Label, Button} from "reactstrap";
 
 const Login = (props) => {
-
+    const theme = useContext(ThemeContext);
+    const darkMode = theme.state.darkMode;
     const {setIsLoggedin} = props;
     const navigate = useNavigate();
     const [user, setUser] = useState({
         email: "",
         password: "",
     });
+
+    // const {user, setUser} = props;
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
@@ -36,7 +40,9 @@ const Login = (props) => {
     return (
         <div className=' row g-5 mx-auto mt-5 d-flex flex-column justify-content-center'>
             <Form className='col-4 p-4 mx-auto' onSubmit={handleSubmit}>
-                <h2 className='mb-4'>Log into your account!</h2>
+                <h2 style={{
+                    marginBottom: "25px"
+                }} className={`text ${darkMode ? "text-light" : "text-dark"}`}>Log into your account!</h2>
                 <FormGroup floating>
                     <Input id="email" name="email" placeholder='Email' value={user.email} type="email" onChange={handleChange} required />
                     <Label for="email">Email</Label>
@@ -49,8 +55,11 @@ const Login = (props) => {
                 </FormGroup>
                 {' '}
                 <FormGroup className='d-flex justify-content-between align-items-end'>
-                    <Button color='dark'>Login</Button>
-                    <Link className='fs-5 text-dark' to={"/register"}>Don't have an account?</Link>
+                    <Button className={`btn ${darkMode? "btn-light": "btn-dark"}`}>Login</Button>
+                    <Link style={{
+                        fontSize: "1.4em",
+                        textDecoration: "none"
+                    }} className={`text ${darkMode ? "text-light" : "text-dark"}`} to={"/register"}>Don't have an account?</Link>
                 </FormGroup>
             </Form>
         </div>

@@ -14,6 +14,7 @@ const Events = (props) => {
     useEffect(() => {
         axios.get("http://localhost:8000/api/events")
             .then((res) => {
+                console.log(user)
                 console.log(res.data);
                 setEvents(res.data);
             })
@@ -53,10 +54,10 @@ const Events = (props) => {
                                 </CardBody>
                                 <CardFooter>
                                     <Button color='dark'>
-                                        <Link className='text-light' to={`/events/edit/${eventObj._id}`}>Edit</Link>
+                                        <Link style={{textDecoration: "none",}} className='text-light' to={`/events/edit/${eventObj._id}`}>Edit</Link>
                                     </Button>
                                     <Button className='ms-4' color='dark'>
-                                        <Link className='text-light' to={`/events/${eventObj._id}`}>Details</Link>
+                                        <Link style={{textDecoration: "none",}}  className='text-light' to={`/events/${eventObj._id}`}>Details</Link>
                                     </Button>
                                     <Button onClick={(e) => {handleDelete(eventObj._id)}} className='ms-4' color='dark'>Delete</Button>
                                 </CardFooter>
