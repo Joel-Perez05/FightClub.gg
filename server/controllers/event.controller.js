@@ -4,6 +4,7 @@ const SECRET = process.env.JWT_SECRET;
 
 const getOneEvent = (req, res) => {
     Event.findOne({_id: req.params.id})
+        .populate("createdBy", "username email")
         .then((singleEvent) => res.json(singleEvent))
         .catch((err) => {
             console.log("Error in get one event", err);

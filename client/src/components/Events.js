@@ -9,13 +9,13 @@ import { Button, Card, CardHeader, CardBody, CardTitle, CardText, CardFooter } f
 const Events = (props) => {
     const [events, setEvents] = useState([]);
     const navigate = useNavigate();
-    const {user} = props;
+    const {user, organizerEmail, userStatus} = props;
 
     useEffect(() => {
         axios.get("http://localhost:8000/api/events")
             .then((res) => {
-                console.log(user)
-                console.log(res.data);
+                // console.log(user.email);
+                // console.log(organizerEmail)
                 setEvents(res.data);
             })
             .catch();
@@ -55,11 +55,11 @@ const Events = (props) => {
                                 <CardFooter>
                                     <Button color='dark'>
                                         <Link style={{textDecoration: "none",}} className='text-light' to={`/events/edit/${eventObj._id}`}>Edit</Link>
-                                    </Button>
+                                    </Button> 
+                                    <Button onClick={(e) => {handleDelete(eventObj._id)}} className='ms-4' color='dark'>Delete</Button>
                                     <Button className='ms-4' color='dark'>
                                         <Link style={{textDecoration: "none",}}  className='text-light' to={`/events/${eventObj._id}`}>Details</Link>
                                     </Button>
-                                    <Button onClick={(e) => {handleDelete(eventObj._id)}} className='ms-4' color='dark'>Delete</Button>
                                 </CardFooter>
                             </Card>
                         </div>

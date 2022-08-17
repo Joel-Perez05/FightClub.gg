@@ -6,6 +6,7 @@ import { Card, CardText, Button, CardHeader, Collapse } from 'reactstrap';
 import moment from 'moment';
 
 const EventDetails = (props) => {
+    const {organizerEmail, setOrganizerEmail} = props;
     const theme = useContext(ThemeContext);
     const darkMode = theme.state.darkMode;
     const {id} = useParams();
@@ -15,16 +16,16 @@ const EventDetails = (props) => {
     useEffect(() => {
         axios.get("http://localhost:8000/api/events/" + id)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data.createdBy.email);
                 setSingleEvent(res.data);
-                setEventCreator(res.data.createdBy)
+                setOrganizerEmail(res.data.createdBy.email)
+                setEventCreator(res.data.createdBy);
             })
             .catch((err) => {
                 console.log(err);
             });
     }, []);
     
-
     return (
         <div>
             <Card className={`bg ${darkMode ? "bg-light" : "bg-dark"}`} style={{

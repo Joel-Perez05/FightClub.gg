@@ -17,31 +17,36 @@ function App() {
   const theme = useContext(ThemeContext);
   const darkMode = theme.state.darkMode;
   const [isLoggedin, setIsLoggedin] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    email: "",
+    password: ""
+  });
+  const [organizerEmail, setOrganizerEmail] = useState("");
+  const [userStatus, setUserStatus] = useState(null);
 
-    useEffect(() => {
-        axios.get("http://localhost:8000/api/current-user", {withCredentials: true})
-            .then((res) => {
-                setUser(res.data);
-                // console.log(user)
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    }, [isLoggedin]);
+    // useEffect(() => {
+    //     axios.get("http://localhost:8000/api/current-user", {withCredentials: true})
+    //         .then((res) => {
+    //             setUser(res.data);
+    //             // console.log(user)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         });
+    // }, [isLoggedin]);
 
 
   return (
     <BrowserRouter>
       <div style={{height: "1292px"}} className={`bg ${darkMode ? "bg-dark" : "bg-light"}`}>
-        <Header user={user} setUser={setUser} isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
+        <Header userStatus={userStatus} setUserStatus={setUserStatus} isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
         <ThemeButton />
         <Routes>
-          <Route element={<Events user={user} isLoggedin={isLoggedin} />} path="/" />
+          <Route element={<Events organizerEmail={organizerEmail} user={user} userStatus={userStatus} />} path="/" />
           <Route element={<EventNew />} path="/events/new" />
           <Route element={<EventEdit />} path="/events/edit/:id" />
-          <Route element={<EventDetails />} path="/events/:id" />
-          <Route element={<Login setIsLoggedin={setIsLoggedin} />} path="/login" />
+          <Route element={<EventDetails organizerEmail={organizerEmail} setOrganizerEmail={setOrganizerEmail} />} path="/events/:id" />
+          <Route element={<Login user={user} setUser={setUser} setIsLoggedin={setIsLoggedin} />} path="/login" />
           <Route element={<Register setIsLoggedin={setIsLoggedin} />} path="/register" />
         </Routes>
       </div>

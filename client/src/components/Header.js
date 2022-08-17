@@ -9,27 +9,28 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } fr
 const Header = (props) => {
     const theme = useContext(ThemeContext);
     const darkMode = theme.state.darkMode;
-    const {isLoggedin, setIsLoggedin} = props;
+    const {isLoggedin, setIsLoggedin, userStatus, setUserStatus} = props;
     const [collapsed, setCollapsed] = useState(true);
     const [hover, setHover] = useState(false);
-    const {user, setUser} = props;
+    // const [user, setUser] = useState(null);
 
-    // useEffect(() => {
-    //     axios.get("http://localhost:8000/api/current-user", {withCredentials: true})
-    //         .then((res) => {
-    //             console.log(res.data)
-    //             setUser(res.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //         });
-    // }, [isLoggedin]);
+    useEffect(() => {
+        axios.get("http://localhost:8000/api/current-user", {withCredentials: true})
+            .then((res) => {
+                // console.log(res.data);
+                setUserStatus(res.data);
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }, [isLoggedin]);
 
     const handleLogout = () => {
         axios.post("http://localhost:8000/logout",{}, {withCredentials: true})
             .then((res) => {
-                console.log(res.data);
-                setUser(null);
+                // console.log(res.data);
+                setUserStatus(null);
+                setIsLoggedin(false);
             })
             .catch((err) => {
                 console.log(err)
@@ -43,12 +44,12 @@ const Header = (props) => {
             <Navbar className={`bg ${darkMode ? "bg-light" : "bg-dark"}`}>
                 <NavbarBrand style={{fontSize: "2.6em"}} className={`text ${darkMode ? "text-dark" : "text-light"}`}>FightClub.gg</NavbarBrand>
                 {
-                    user? 
+                    userStatus? 
                     <NavbarBrand style={{
                         fontSize: "2.6em",
                         margin: "auto"
                     }}
-                    className={`text ${darkMode ? "text-dark" : "text-light"}`}>Welcome {user.username}</NavbarBrand>:null
+                    className={`text ${darkMode ? "text-dark" : "text-light"}`}>Welcome {userStatus.username}</NavbarBrand>:null
                 }
                 <NavbarToggler onClick={toggleNavbar} className="me-2" />
                 <Collapse isOpen={!collapsed} navbar>
@@ -68,7 +69,7 @@ const Header = (props) => {
                             className={`text ${darkMode ? "text-dark" : "text-light"}`} to="/events/new">Create Event</NavLink>
                         </NavItem>
                         {
-                            user ? (
+                            userStatus ? (
                                 <NavItem>
                                     <Button className={`btn ${darkMode? "btn-dark": "btn-light"}`} onClick={handleLogout}>Logout</Button>
                                 </NavItem>

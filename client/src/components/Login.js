@@ -7,12 +7,12 @@ import {Form, FormGroup, Input, Label, Button} from "reactstrap";
 const Login = (props) => {
     const theme = useContext(ThemeContext);
     const darkMode = theme.state.darkMode;
-    const {setIsLoggedin} = props;
+    const {user, setUser, setIsLoggedin} = props;
     const navigate = useNavigate();
-    const [user, setUser] = useState({
-        email: "",
-        password: "",
-    });
+    // const [user, setUser] = useState({
+    //     email: "",
+    //     password: "",
+    // });
 
     // const {user, setUser} = props;
     const [errors, setErrors] = useState({});
@@ -27,7 +27,7 @@ const Login = (props) => {
         e.preventDefault();
         axios.post("http://localhost:8000/login", user, {withCredentials: true})
             .then((res) => {
-                console.log(res.data);
+                console.log(res.data.successMessage);
                 setIsLoggedin(true);
                 navigate("/");
             })
