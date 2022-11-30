@@ -2,7 +2,7 @@ require("./config/mongoose.config");
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = 8000;
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
